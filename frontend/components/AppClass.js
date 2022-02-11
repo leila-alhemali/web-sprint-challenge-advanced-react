@@ -34,11 +34,6 @@ export default class AppClass extends React.Component {
   }
 
 
-  componentDidUpdate() {
-    console.log(this.state)
-  }
-
-
   moveUp = () => {
     if (this.state.grid.y > 1) {
       this.setState({ ...this.state,
@@ -97,8 +92,8 @@ export default class AppClass extends React.Component {
     return (
       <div id="wrapper" className={className}>
         <div className="info">
-          <h3 id="coordinates">Coordinates {this.state.grid.x}, {this.state.grid.y} </h3>
-          <h3 id="steps">You moved {this.state.counter} times</h3>
+          <h3 id="coordinates">{`Coordinates (${this.state.grid.x}, ${this.state.grid.y})`}</h3>
+          <h3 id="steps">You moved {this.state.counter} {this.state.counter === 1 ? "time" : "times"}</h3>
         </div>
         <div id="grid">
           <div className={`${this.state.grid.x == 1 && this.state.grid.y == 1 ? "square active" : "square"}`}>{this.state.grid.x === 1 && this.state.grid.y === 1 ? "B" : ""}</div>
@@ -119,7 +114,7 @@ export default class AppClass extends React.Component {
           <button onClick={this.moveUp} id="up">UP</button>
           <button onClick={this.moveRight} id="right">RIGHT</button>
           <button onClick={this.moveDown} id="down">DOWN</button>
-          <button onClick={() =>{this.setState({...this.state, counter: 0, grid: {"x":2, "y":2}, message: ""})} }id="reset">reset</button>
+          <button onClick={() =>{this.setState({...this.state, counter: 0, grid: {"x":2, "y":2}, message: "", email: ""})} }id="reset">reset</button>
         </div>
         <form onSubmit={this.onSubmit}>
           <input onChange={this.onChange} id="email" type="email" placeholder="type email"></input>

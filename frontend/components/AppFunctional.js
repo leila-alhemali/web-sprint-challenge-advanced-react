@@ -7,7 +7,6 @@ export default function AppFunctional(props) {
   const [grid, setGrid] = useState({"x":2, "y":2})
   const [message, setMessage] = useState('')
   const [email, setEmail] = useState('')
-  const [B, setB] = useState('')
 
   const onChange = event => {
     const { value } = event.target
@@ -20,9 +19,11 @@ export default function AppFunctional(props) {
       axios.post('http://localhost:9000/api/result', payloadToSend)
       .then (resp => {
         setMessage(resp.data.message)
+        setEmail('')
       })
       .catch(err => {
         console.log(err)})
+
   }
 
   const moveUp = () => {
@@ -74,7 +75,7 @@ export default function AppFunctional(props) {
     <div id="wrapper" className={props.className}>
       <div className="info">
         <h3 id="coordinates">Coordinates ({grid.x}, {grid.y})</h3>
-        <h3 id="steps" >You moved {counter} times</h3>
+        <h3 id="steps" >You moved {counter} {counter === 1 ? "time" : "times"}</h3>
       </div>
       <div id="grid">
         <div className={`${grid.x == 1 && grid.y == 1 ? "square active" : "square"}`}>{grid.x === 1 && grid.y === 1 ? "B" : ""}</div>

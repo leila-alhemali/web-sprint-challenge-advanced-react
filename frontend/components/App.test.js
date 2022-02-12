@@ -7,7 +7,7 @@ let upBtn, counter, resetBtn
 
 beforeEach(() => {
   render(<AppFunctional/>)
-  upBtn = screen.queryByText('up')
+  upBtn = screen.queryByText('UP')
   counter = screen.queryByText('0')
   resetBtn = screen.queryByText('reset')
 })
@@ -22,6 +22,7 @@ test('sanity', () => {
 
 test ('Counter updates on direction button click', () => {
     fireEvent.click(upBtn)
+    console.log(upBtn)
     expect(counter).toBe('1')
 })
 

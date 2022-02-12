@@ -22,7 +22,8 @@ export default function AppFunctional(props) {
         setEmail('')
       })
       .catch(err => {
-        console.log(err)})
+        setMessage(err.response.data.message)
+        })
 
   }
 
@@ -96,7 +97,7 @@ export default function AppFunctional(props) {
         <button onClick={moveUp} id="up">UP</button>
         <button onClick={moveRight} id="right">RIGHT</button>
         <button onClick={moveDown} id="down">DOWN</button>
-        <button onClick={() => {setCounter(0), setGrid({"x":2, "y":2}), setMessage('')}}id="reset">reset</button>
+        <button onClick={() => {setCounter(0), setGrid({"x":2, "y":2}), setMessage(''), setEmail('')}}id="reset">reset</button>
       </div>
       <form onSubmit={onSubmit}>
         <input onChange={onChange} value={email} id="email" type="email" placeholder="type email"></input>

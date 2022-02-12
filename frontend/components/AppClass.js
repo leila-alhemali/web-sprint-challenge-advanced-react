@@ -14,11 +14,6 @@ export default class AppClass extends React.Component {
 
 
 
-  onChange = event => {
-    const { value } = event.target
-    this.setState({ ...this.state, email: value})
-  }
-
   onSubmit = event => {
     event.preventDefault()
     const payloadToSend = {"x": this.state.grid.x,
@@ -27,11 +22,16 @@ export default class AppClass extends React.Component {
     .then (resp => {
       this.setState({ ...this.state, message: resp.data.message})
       this.setState({ ...this.state, email: ''})     
-      console.log(this.state) 
   
     })
     .catch(err => {
-      console.log(err)})
+      this.setState({ ...this.state, message: err.response.data.message})})
+  }
+
+  onChange = event => {
+    const { value } = event.target
+    this.setState({ ...this.state, email: value})
+    
   }
 
 
@@ -41,7 +41,7 @@ export default class AppClass extends React.Component {
         counter: this.state.counter + 1, 
         grid: {...this.state.grid, y: this.state.grid.y - 1}, 
         message: ''});
-      console.log(this.state)
+
     }
     else {
       this.setState({ ...this.state, message: "You can't go up"})
@@ -54,7 +54,6 @@ export default class AppClass extends React.Component {
         counter: this.state.counter + 1, 
         grid: { ...this.state.grid, y: this.state.grid.y + 1},
         message: ''});
-      console.log(this.state)
     }
     else {
       this.setState({ ...this.state, message: "You can't go down"})
@@ -67,7 +66,6 @@ export default class AppClass extends React.Component {
         counter: this.state.counter + 1, 
         grid: {...this.state.grid, x: this.state.grid.x - 1},
         message: ''});
-      console.log(this.state)
     }
     else {
       this.setState({ ...this.state, message: "You can't go left"})
@@ -80,7 +78,6 @@ export default class AppClass extends React.Component {
         counter: this.state.counter + 1, 
         grid: {...this.state.grid, x: this.state.grid.x + 1},
         message: ''});
-      console.log(this.state)
     }
     else {
       this.setState({ ...this.state, message: "You can't go right"})
@@ -118,7 +115,7 @@ export default class AppClass extends React.Component {
           <button onClick={() =>{this.setState({...this.state, counter: 0, grid: {"x":2, "y":2}, message: "", email: ""})} }id="reset">reset</button>
         </div>
         <form onSubmit={this.onSubmit}>
-          <input onChange={this.onChange} id="email" type="email" placeholder="type email"></input>
+          <input onChange={this.onChange} value={this.state.email} id="email" type="email" placeholder="type email"></input>
           <input id="submit" type="submit"></input>
         </form>
       </div>

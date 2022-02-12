@@ -3,11 +3,12 @@ import { render, fireEvent, screen } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
 import AppFunctional from './AppFunctional'
 
-let upBtn, counter, resetBtn
+let upBtn, counter, resetBtn, downBtn
 
 beforeEach(() => {
   render(<AppFunctional/>)
   upBtn = screen.queryByText('UP')
+  downBtn = screen.queryByText('DOWN')
   counter = screen.queryByText('0')
   resetBtn = screen.queryByText('reset')
 })
@@ -20,34 +21,31 @@ test('sanity', () => {
   expect(true).toBe(false)
 })
 
-test ('Counter updates on direction button click', () => {
-    fireEvent.click(upBtn)
-    console.log(upBtn)
-    expect(counter).toBe('1')
+test ('Functional and Class-based tabs render', () => {
+  expect('Functional').toBeInTheDocument(),
+  expect('Class-Based').toBeInTheDocument()
+}
+
+
+test ('Up button renders', () => {
+     expect(upBtn).toBeInTheDocument()
 })
 
-test ('Header renders', () => {
-     const header = screen.getByText('Welcome to the GRID')
-     expect(header).toBeInTheDocument()
-})
-
-test ('we can submit an email address', () => {
-    const emailInput = screen.getAllByPlaceholderText('type email')
-    const submitBtn = screen.queryAllByText('Submit')
-    fireEvent.change(emailInput, { target: { value: 'valid@email.address' }})
-    fireEvent.click(submitBtn)
-    expect('valid win').toBeInTheDocument()
+test ('Down button renders', () => {
+    expect(downBtn).toBeInTheDocument()
+   
 })
 
 
-test('we can reset the grid', () => {
-    fireEvent.click(upBtn)
-    fireEvent.click(resetBtn)
-    expect(counter).toBe('0')
+test('Down button renders error at lower grid wall', () => {
+  fireEvent.click(downBtn)
+  fireEvent.click(downBtn)
+  screen.getByText("You can't go down")
 })
+
 
 test ('Up button renders error at upper grid wall', () => {
   fireEvent.click(upBtn)
   fireEvent.click(upBtn)
-  expect("You can't go up").toBeInTheDocument
+  screen.getByText("You can't go up")
 })
